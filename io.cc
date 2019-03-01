@@ -1228,9 +1228,10 @@ uca_org_t cacti_interface(const string & infile_name)
 
   g_ip = new InputParameter();
   g_ip->parse_cfg(infile_name);
+  //cout << g_ip->mem_data_width << endl;
   if(!g_ip->error_checking())
 	  exit(0);
- // if (g_ip->print_input_args)
+  if (g_ip->print_input_args)
     g_ip->display_ip();
 	
 
@@ -1288,7 +1289,8 @@ uca_org_t cacti_interface(const string & infile_name)
   //g_ip->display_ip();
 	
 	
-   
+  //cout << g_ip->mem_data_width << endl; 
+  //verified that g_ip->mem_data_width is set
   IOTechParam iot(g_ip, g_ip->io_type, g_ip->num_mem_dq, g_ip->mem_data_width, g_ip->num_dq,g_ip->dram_dimm, 1,g_ip->bus_freq ); 
   Extio testextio(&iot);  
   testextio.extio_area();

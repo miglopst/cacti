@@ -48,7 +48,7 @@ TSV::TSV(enum TSV_type tsv_type,
     	break;
     case Coarse:
     	cap = g_tp.tsv_parasitic_capacitance_coarse;
-    	res = g_tp.tsv_parasitic_resistance_coarse;
+	res = g_tp.tsv_parasitic_resistance_coarse;
     	min_area = g_tp.tsv_minimum_area_coarse;
     	break;
     default:
@@ -161,6 +161,7 @@ void TSV::compute_delay()
 				  drain_C_(w_TSV_n[0], NCH, 1, 1, area.h, is_dram, false, is_wl_tr);
 	tf = rd * (c_intrinsic + c_load);
 	//Refer to horowitz function definition
+	//[peng] delay correct
 	this_delay = horowitz(inrisetime, tf, 0.5, 0.5, RISE);
 	delay += this_delay;
 	inrisetime = this_delay / (1.0 - 0.5);
@@ -176,6 +177,7 @@ void TSV::compute_delay()
 	  c_intrinsic = drain_C_(w_TSV_p[i], PCH, 1, 1, area.h, is_dram, false, is_wl_tr) +
 					drain_C_(w_TSV_n[i], NCH, 1, 1, area.h, is_dram, false, is_wl_tr);
 	  tf = rd * (c_intrinsic + c_load);
+	  //[peng] delay correct
 	  this_delay = horowitz(inrisetime, tf, 0.5, 0.5, RISE);
 	  delay += this_delay;
 	  inrisetime = this_delay / (1.0 - 0.5);
@@ -195,6 +197,7 @@ void TSV::compute_delay()
     double R_TSV_out = res;
     tf = rd * (c_intrinsic + c_load) + R_TSV_out * c_load / 2;
     this_delay = horowitz(inrisetime, tf, 0.5, 0.5, RISE);
+    ////[peng] delay incorrect
     delay  += this_delay;
 
     power.readOp.dynamic += (c_load + c_intrinsic) * Vdd * Vdd; //Dynamic power done

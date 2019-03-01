@@ -168,6 +168,7 @@ UCA::UCA(const DynamicParameter & dyn_p)
 	switch(g_ip->partition_gran)
 	{
 	case 0:// Coarse_rank_level:
+		//tsv_os_bank.delay is too large
 		delay_TSV_tot = (g_ip->num_die_3d-1) * tsv_os_bank.delay;
 		num_TSV_tot = (comm_bits + row_add_bits + col_add_bits + data_bits*2) * (1 + redundancy_perc_TSV); //* (g_ip->nbanks/4)
 		area_TSV_tot = num_TSV_tot * tsv_os_bank.area.get_area();
@@ -244,6 +245,7 @@ UCA::UCA(const DynamicParameter & dyn_p)
 			+ area_address_bus + area_data_bus)/g_ip->nbanks + area_sense_amp;
 
 
+		//[peng] we have verified that the value of delay_TSV_tot is too large!!
 		t_RCD += delay_TSV_tot;
 		t_RAS += delay_TSV_tot;
 		t_RC += delay_TSV_tot;
@@ -368,6 +370,7 @@ double UCA::compute_delays(double inrisetime)
 
 	  //double t_rcd = membus_RAS->delay + bank.mat.delay_bitline + bank.mat.delay_sa;
 	  //t_RCD= membus_RAS->add_dec->delay + membus_RAS->lwl_drv->delay + bank.mat.delay_bitline + bank.mat.delay_sa;
+	  //[peng] we have verified that the following output "membus_RAS->add_dec->delay + membus_RAS->lwl_drv->delay + bank.mat.delay_bitline + bank.mat.delay_sa" are in normal address range
 	  t_RCD = membus_RAS->add_dec->delay + membus_RAS->lwl_drv->delay + bank.mat.delay_bitline + bank.mat.delay_sa;
 	  t_RAS = membus_RAS->delay + bank.mat.delay_bitline + bank.mat.delay_sa + bank.mat.delay_bl_restore;
 	  precharge_delay = bank.mat.delay_writeback +

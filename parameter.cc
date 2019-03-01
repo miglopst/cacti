@@ -867,17 +867,23 @@ void TechnologyParameter::assign_tsv(const string & in_file)
 			  continue;
 			}
 			
-			tsv_length *= g_ip->num_die_3d;
+			//[peng] we modify here
+			//tsv_length *= g_ip->num_die_3d;
 			if(iter==0)
 			{
-				tsv_parasitic_resistance_fine = tsv_resistance(BULK_CU_RESISTIVITY, tsv_length, tsv_diameter, tsv_contact_resistance);
-				tsv_parasitic_capacitance_fine = tsv_capacitance(tsv_length, tsv_diameter, tsv_pitch, tsv_dielec_thickness, tsv_liner_dielectric_constant, tsv_depletion_width);
+				//tsv_parasitic_resistance_fine = tsv_resistance(BULK_CU_RESISTIVITY, tsv_length, tsv_diameter, tsv_contact_resistance);
+				//tsv_parasitic_capacitance_fine = tsv_capacitance(tsv_length, tsv_diameter, tsv_pitch, tsv_dielec_thickness, tsv_liner_dielectric_constant, tsv_depletion_width);
+				tsv_parasitic_resistance_fine = tsv_resistance(BULK_CU_RESISTIVITY, tsv_length*g_ip->num_die_3d, tsv_diameter, tsv_contact_resistance);
+				tsv_parasitic_capacitance_fine = tsv_capacitance(tsv_length*g_ip->num_die_3d, tsv_diameter, tsv_pitch, tsv_dielec_thickness, tsv_liner_dielectric_constant, tsv_depletion_width);
 				tsv_minimum_area_fine = tsv_area(tsv_pitch);
 			}
 			else
 			{
-				tsv_parasitic_resistance_coarse = tsv_resistance(BULK_CU_RESISTIVITY, tsv_length, tsv_diameter, tsv_contact_resistance);
-				tsv_parasitic_capacitance_coarse = tsv_capacitance(tsv_length, tsv_diameter, tsv_pitch, tsv_dielec_thickness, tsv_liner_dielectric_constant, tsv_depletion_width);
+				//[peng] this is executed multiple times until tsv_length is too large!!
+				//tsv_parasitic_resistance_coarse = tsv_resistance(BULK_CU_RESISTIVITY, tsv_length, tsv_diameter, tsv_contact_resistance);
+				//tsv_parasitic_capacitance_coarse = tsv_capacitance(tsv_length, tsv_diameter, tsv_pitch, tsv_dielec_thickness, tsv_liner_dielectric_constant, tsv_depletion_width);
+				tsv_parasitic_resistance_coarse = tsv_resistance(BULK_CU_RESISTIVITY, tsv_length*g_ip->num_die_3d, tsv_diameter, tsv_contact_resistance);
+				tsv_parasitic_capacitance_coarse = tsv_capacitance(tsv_length*g_ip->num_die_3d, tsv_diameter, tsv_pitch, tsv_dielec_thickness, tsv_liner_dielectric_constant, tsv_depletion_width);
 				tsv_minimum_area_coarse = tsv_area(tsv_pitch);
 			}
 		}

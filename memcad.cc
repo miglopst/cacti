@@ -393,6 +393,7 @@ void find_all_bobs(MemCadParameters * memcad_params)
 		sort(memcad_all_channels->begin(), memcad_all_channels->end(), compare_channels_bw); 
 		vector<int> start_index; start_index.push_back(0);
 		vector<int> end_index;
+		cout << memcad_all_channels->size() << endl;
 		int last_bw =(*memcad_all_channels)[0]->bandwidth;
 		for(unsigned int i=0;i< memcad_all_channels->size();i++)
 		{
