@@ -251,6 +251,7 @@ UCA::UCA(const DynamicParameter & dyn_p)
 		t_RC += delay_TSV_tot;
 		t_RP += delay_TSV_tot;
 		t_CAS += 2 * delay_TSV_tot;
+		cout << "2 * delay_TSV_tot = " << 2 * delay_TSV_tot << endl;
 		t_RRD += delay_TSV_tot;
 
 		activate_energy += dyn_pow_TSV_per_access;
@@ -377,6 +378,9 @@ double UCA::compute_delays(double inrisetime)
 			  bank.mat.delay_wl_reset + bank.mat.delay_bl_restore;
 	  t_RP = precharge_delay;
 	  t_RC = t_RAS + t_RP;
+	  cout << "membus_CAS->delay = " << membus_CAS->delay << endl;
+	  cout << "bank.mat.delay_subarray_out_drv = " << bank.mat.delay_subarray_out_drv << endl;
+	  cout << "membus_data->delay = " << membus_data->delay << endl;
 	  t_CAS = membus_CAS->delay + bank.mat.delay_subarray_out_drv + membus_data->delay;
 	  t_RRD = membus_RAS->center_stripe->delay + membus_RAS->bank_bus->delay;
 	  //t_RRD = membus_RAS->delay;

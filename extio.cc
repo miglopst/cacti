@@ -406,6 +406,7 @@ void Extio::extio_eye()
 	if (io_param->io_type == Serial)
 	{
 
+	 //[peng] this is not executed
 	 t_margin_write_setup = (1e6/(4*io_param->frequency)) - 
          io_param->t_ds - 
          io_param->t_jitter_setup_sen;
@@ -472,6 +473,7 @@ void Extio::extio_eye()
 	
   //Worst-case timing margin per state depending on DQ and CA timing margins
   if (g_ip->iostate == READ) {
+ 
     io_tmargin = t_margin_read_setup < t_margin_read_hold ? 
           t_margin_read_setup : t_margin_read_hold;
     io_tmargin = io_tmargin < t_margin_addr_setup ? 
